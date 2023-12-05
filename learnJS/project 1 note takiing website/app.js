@@ -19,7 +19,7 @@ addBtn.addEventListener("click", function (e) {
     notesArr.push(addTxt.value);
     localStorage.setItem("notes", JSON.stringify(notesArr));
     addTxt.value = "";
-    console.log(notesArr);
+    // console.log(notesArr);
     showNotes();
 }
 })
@@ -54,14 +54,14 @@ function showNotes() {
         notesElem.innerHTML = html;
     }
     else{
-        notesElem.innerHTML = `Nothing to show, write something and use "add notes" button above to add notes.`;
+        notesElem.innerHTML = `Nothing to show, write something and use "Add Notes" button above to add notes.`;
     }
 }   
 
 //function to delete a note 
 
 function deleteNote(index){
-    console.log("delete this note.",index)
+    // console.log("delete this note.",index)
     let notes = localStorage.getItem("notes");
     if (notes === null) {
         notesArr = [];
@@ -69,8 +69,33 @@ function deleteNote(index){
     else {
         notesArr = JSON.parse(notes);
     }
-
     notesArr.splice(index, 1);
     localStorage.setItem("notes", JSON.stringify(notesArr));
     showNotes();
 }
+
+// Adding search feature -->
+
+let search = document.getElementById("searchTxt");
+
+search.addEventListener("input", function(){
+    let inputVal = search.value.toLowerCase();
+    // console.log("event is fired", inputVal);  
+
+    let noteCard = document.getElementsByClassName("noteCard");
+    Array.from(noteCard).forEach(function(element){
+        let cardText = element.getElementsByTagName("p")[0].innerText;
+        if(cardText.includes(inputVal)){
+            element.style.display = "block";
+        }
+        else{
+            element.style.display = "none";
+        }
+    })
+})
+
+/* further features -->
+1. add title to each card.
+2.mark as important
+
+*/
